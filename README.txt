@@ -14,4 +14,4 @@ for anyone needing to add a “joystick” function to their game or app.
 It has been updated for use with Xcode 7 and iOS9.
 Images used are from Kenney Assets: www.kenney.nl
 
-Created by WesBrownDev
+Created by Wes Brown
