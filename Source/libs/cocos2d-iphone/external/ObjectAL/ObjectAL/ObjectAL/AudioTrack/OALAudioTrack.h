@@ -33,8 +33,7 @@
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 #import <AVFoundation/AVFoundation.h>
 #elif __CC_PLATFORM_ANDROID
-#import <AndroidKit/AndroidMediaPlayer.h>
-#import <AndroidKit/AndroidMediaPlayerOnCompletionListener.h>
+#import <BridgeKitV3/AndroidMediaPlayer.h>
 #endif
 #import "OALAction.h"
 #import "OALAudioTrackNotifications.h"
@@ -49,7 +48,7 @@
 @interface OALAudioTrack : NSObject <AVAudioPlayerDelegate,OALSuspendManager>
 #elif __CC_PLATFORM_ANDROID
 BRIDGE_CLASS("com.spritebuilder.OALAudioTrack")
-@interface OALAudioTrack : JavaObject <OALSuspendManager>
+@interface OALAudioTrack : JavaObject <AndroidMediaPlayerOnCompletionListener,OALSuspendManager>
 #endif
 {
     /** If true, this track is recording metering data */

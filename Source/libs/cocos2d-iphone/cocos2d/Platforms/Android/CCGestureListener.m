@@ -10,7 +10,6 @@
 
 #if __CC_PLATFORM_ANDROID
 
-
 @implementation CCGestureListener {
     id<CCGestureListenerDelegate> _delegate;
     struct {
@@ -22,6 +21,13 @@
         int reserved:3;
     } _flags;
 }
+
+@bridge (constructor) init;
+@bridge (callback) onDoubleTap: = onDoubleTap;
+@bridge (callback) onDown: = onDown;
+@bridge (callback) onFling:end:velocityX:velocityY: = onFling;
+@bridge (callback) onLongPress: = onLongPress;
+@bridge (callback) onScroll:end:distanceX:distanceY: = onScroll;
 
 - (void)setDelegate:(id<CCGestureListenerDelegate>)delegate
 {

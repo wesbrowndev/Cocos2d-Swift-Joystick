@@ -6,16 +6,15 @@
 //
 //
 
-#import <GLActivityKit/GLEditText.h>
+#import <BridgeKitV3/BridgeKit.h>
 
-@class AndroidContext;
-@class AndroidKeyEvent;
 
 typedef void (^CCEditTextCompletionBlock)(void);
 
-BRIDGE_CLASS("com.apportable.GLEditText")
-@interface CCEditText : GLEditText
+BRIDGE_CLASS("org.cocos2d.CCEditText")
+@interface CCEditText : AndroidEditText
 - (id)initWithContext:(AndroidContext *)context;
 - (BOOL)onKeyPreIme:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event;
-- (void)setCompletionBlock:(CCEditTextCompletionBlock)completionBlock;
+- (void)setTextSizeDouble:(double)textSize;
+- (void) setCompletionBlock:(CCEditTextCompletionBlock)completionBlock;
 @end

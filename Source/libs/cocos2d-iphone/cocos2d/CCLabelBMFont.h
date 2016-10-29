@@ -73,7 +73,7 @@
  *
  *  @return The CCLabelBMFont Object.
  */
-+(instancetype) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
 /**
  *  Creates and returns a label object using the specified text, font file and alignment values.
@@ -86,7 +86,7 @@
  *  @return The CCLabelBMFont Object.
  *  @see CCTextAlignment
  */
-+(instancetype) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
 
 /**
  *  Creates and returns a label object using the specified text, font file, alignment and image offset values.
@@ -100,7 +100,7 @@
  *  @return The CCLabelBMFont Object.
  *  @see CCTextAlignment
  */
-+(instancetype) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
 /**
  *  Initializes and returns a label object using the specified text and font file values.
@@ -151,6 +151,14 @@
 /** The technique to use for horizontal aligning of the text.
  @see CCTextAlignment */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
+
+/** The opacity of the text, in the range 0.0 (fully transparent) to 1.0 (fully opaque). */
+@property (nonatomic,readwrite) CGFloat opacity;
+
+/** The color of the text.
+ @see CCColor */
+@property (nonatomic,strong) CCColor* color;
+
 
 /// -----------------------------------------------------------------------
 /// @name Size and Alignment

@@ -20,9 +20,6 @@
 #import "CCTouchAndroid.h"
 #import <CoreGraphics/CGGeometry.h>
 
-#import <AndroidKit/AndroidMotionEvent.h>
-#import <AndroidKit/AndroidGestureDetector.h>
-
 static const CGSize FIXED_SIZE = {586, 384};
 
 static NSMutableDictionary *touches = nil;
@@ -32,6 +29,8 @@ static CCTouchEvent *currentEvent = nil;
     NSMutableSet *_gestureDetectors;
 }
 
+@bridge (constructor) initWithContext:;
+@bridge (callback) onTouchEvent: = onTouchEvent;
 
 - (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode  scaleFactor:(float)scaleFactor
 {

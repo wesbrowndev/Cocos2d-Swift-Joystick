@@ -64,6 +64,7 @@
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
+
 }
 
 -(CAMetalLayer *)metalLayer
@@ -83,26 +84,26 @@
 {
 	dispatch_semaphore_wait(_queuedFramesSemaphore, DISPATCH_TIME_FOREVER);
 	
-    @autoreleasepool {
-        if(_layerSizeDidUpdate){
-            self.metalLayer.drawableSize = _surfaceSize;
-            _layerSizeDidUpdate = NO;
-        }
-        
-        id<CAMetalDrawable> drawable = [self.metalLayer nextDrawable];
-        if (drawable == nil) {
-            NSLog(@"Metal drawable pool exhausted. You may be rendering too much in a frame.");
-        }
-        
-        _currentDrawable    = drawable;
-        _destinationTexture = drawable.texture;
-    }
+	if(_layerSizeDidUpdate){
+		self.metalLayer.drawableSize = _surfaceSize;
+		_layerSizeDidUpdate = NO;
+	}
+	
+	id<CAMetalDrawable> drawable = nil;
+	while(drawable == nil){
+		drawable = [self.metalLayer nextDrawable];
+
+#if DEBUG
+		if(drawable == nil) NSLog(@"Metal drawable pool exhausted. You may be rendering too much in a frame.");
+#endif
+	}
+	
+	_currentDrawable = drawable;
+	_destinationTexture = drawable.texture;
 }
 
 - (void)presentFrame
 {
-    [_context.currentCommandBuffer presentDrawable:_currentDrawable];
-    
 	// Prevent the block from retaining self via the ivar.
 	dispatch_semaphore_t sema = _queuedFramesSemaphore;
 	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
@@ -111,8 +112,8 @@
 	
 	[_context flushCommandBuffer];
 	
+	[_currentDrawable present];
 	_currentDrawable = nil;
-    _destinationTexture = nil;
 }
 
 -(void)addFrameCompletionHandler:(dispatch_block_t)handler

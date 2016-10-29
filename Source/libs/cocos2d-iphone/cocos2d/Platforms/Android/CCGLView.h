@@ -10,15 +10,13 @@
 
 #if __CC_PLATFORM_ANDROID
 
-
+#import <BridgeKitV3/BridgeKit.h>
 #import <android/native_window.h>
 #import <bridge/runtime.h>
-#import <GLActivityKit/GLView.h>
+#import <BridgeKitV3/BridgeKit.h>
 
 #import "../../Platforms/CCGL.h"
 #import "CCDirectorView.h"
-
-@class AndroidGestureDetector;
 
 enum CCAndroidScreenMode {
     
@@ -41,11 +39,12 @@ enum CCAndroidScreenMode {
     CCScreenScaledAspectFitEmulationMode
 };
 
-BRIDGE_CLASS("com.apportable.GLView")
-@interface CCGLView : GLView <CCDirectorView>
+BRIDGE_CLASS("org.cocos2d.CCGLView")
+@interface CCGLView : AndroidSurfaceView <CCDirectorView>
 
-
+- (id)initWithContext:(AndroidContext *)context;
 - (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode scaleFactor:(float)scaleFactor;
+- (BOOL)onTouchEvent:(AndroidMotionEvent *)event;
 
 - (BOOL)setupView:(ANativeWindow*)window;
 - (void)swapBuffers;

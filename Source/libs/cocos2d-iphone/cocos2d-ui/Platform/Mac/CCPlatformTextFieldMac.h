@@ -6,7 +6,7 @@
 //
 //
 
-#import "ccMacros.h"
+#import "CCMacros.h"
 
 #if __CC_PLATFORM_MAC
 

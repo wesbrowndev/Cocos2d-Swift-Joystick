@@ -7,25 +7,27 @@ class MainScene: CCNode {
     weak var player: CCSprite!
     
     var stickActive: Bool = false
-    var velocity: CGPoint = CGPointMake(0, 0)
+    var velocity: CGPoint = CGPoint(x: 0, y: 0)
     var angularVelocity: CGFloat = 0
     
-    func didLoadFromCCB() {
-        self.userInteractionEnabled = true
+    override init!() {
+        super.init()
+        
+        isUserInteractionEnabled = true
     }
 
-    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        let location = touch.locationInNode(self)
+    override func touchBegan(_ touch: CCTouch!, with event: CCTouchEvent!) {
+        let location = touch.location(in: self)
         
-        if (CGRectContainsPoint(joystick.boundingBox(), location)) {
+        if (joystick.boundingBox().contains(location)) {
             stickActive = true
         } else {
             stickActive = false
         }
     }
     
-    override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        let location = touch.locationInNode(self)
+    override func touchMoved(_ touch: CCTouch!, with event: CCTouchEvent!) {
+        let location = touch.location(in: self)
         
         if (stickActive == true) {
             let vector = CGVector(dx: location.x - dpad.position.x, dy: location.y - dpad.position.y)
@@ -36,13 +38,13 @@ class MainScene: CCNode {
             let xDist: CGFloat = sin(angle - radians) * length
             let yDist: CGFloat = cos(angle - radians) * length
             
-            joystick.position = CGPointMake(dpad.position.x - xDist, dpad.position.y + yDist)
+            joystick.position = CGPoint(x: dpad.position.x - xDist, y: dpad.position.y + yDist)
             
-            if (CGRectContainsPoint(dpad.boundingBox(), location)) {
+            if (dpad.boundingBox().contains(location)) {
                 joystick.position = location
                 
             } else {
-                joystick.position = CGPointMake(dpad.position.x - xDist, dpad.position.y + yDist)
+                joystick.position = CGPoint(x: dpad.position.x - xDist, y: dpad.position.y + yDist)
             }
             
             self.velocity = ccp(xDist * -0.1, yDist * 0.1)
@@ -51,20 +53,20 @@ class MainScene: CCNode {
         }
     }
     
-    override func touchEnded(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+    override func touchEnded(_ touch: CCTouch!, with event: CCTouchEvent!) {
         if (stickActive == true) {
             let move = CCActionMoveTo(duration: 0.1, position: dpad.position)
-            joystick.runAction(move)
+            joystick.run(move)
         }
         
         self.resetVelocity()
     }
     
-    override func touchCancelled(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+    override func touchCancelled(_ touch: CCTouch!, with event: CCTouchEvent!) {
         self.resetVelocity()
     }
     
-    override func update(delta: CCTime) {
+    override func update(_ delta: CCTime) {
         if self.velocity.x != 0 || self.velocity.y != 0 {
             player.position = ccpAdd(player.position, self.velocity)
         }
@@ -75,6 +77,6 @@ class MainScene: CCNode {
     }
     
     func resetVelocity() {
-        self.velocity = CGPointZero
+        self.velocity = CGPoint.zero
     }
 }

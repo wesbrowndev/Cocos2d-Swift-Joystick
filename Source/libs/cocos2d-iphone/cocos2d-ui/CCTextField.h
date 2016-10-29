@@ -27,11 +27,6 @@
 
 #import "CCPlatformTextField.h"
 
-#if __CC_PLATFORM_ANDROID
-#import <AndroidKit/AndroidEditText.h>
-#endif
-
-
 @class CCPlatformTextField;
 
 /**
